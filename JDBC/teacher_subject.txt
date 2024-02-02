@@ -1,0 +1,11 @@
+SELECT 
+	t.first_name || ' ' || t.last_name as student_name, 
+	s.subject_name 
+
+from teachers as t 
+
+join teacher_subject_mapping as tsm on t.teacher_id = tsm.teacher_id  
+
+join subjects as s on tsm.subject_id = s.subject_id
+
+order by s.subject_name;

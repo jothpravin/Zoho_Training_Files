@@ -1,0 +1,32 @@
+SELECT
+    S.StudentID,
+    S.FirstName AS FirstName,
+    S.LastName AS LastName,
+    S.DateOfBirth AS DateOfBirth,
+    S.Gender AS Gender,
+    
+    A.Date AS AttendanceDate,
+    A.Status AS AttendanceStatus,
+    
+    T.FirstName AS TeacherFirstName,
+    T.LastName AS TeacherLastName,
+    
+    Sec.SectionName,
+    Sec.Class
+
+FROM Student AS S
+
+-- Join with Marks table
+-- LEFT JOIN Marks AS M ON S.StudentID = M.StudentID
+
+-- Join with Attendance table
+LEFT JOIN Attendance AS A ON S.StudentID = A.StudentID
+
+-- Join with Section table
+LEFT JOIN Section AS Sec ON S.SectionID = Sec.SectionID
+
+-- Join with Teacher table through Section table
+LEFT JOIN Teacher AS T ON Sec.TeacherID = T.TeacherID
+
+--WHERE S.StudentID=1001;
+ORDER BY S.FirstName;

@@ -1,0 +1,25 @@
+INSERT INTO Teacher (TeacherID, FirstName, LastName, DateOfBirth, Gender)
+VALUES
+    (1, 'Pravin', 'Kumar', '1980-05-15', 'Male'),
+    (2, 'Bawan', 'Singh', '1985-08-20', 'Male');
+
+INSERT INTO Section (SectionID, SectionName, Class, TeacherID)
+VALUES
+    (101, 'A', 10, 1),
+    (102, 'B', 11, 2);
+
+INSERT INTO Student (StudentID, FirstName, LastName, DateOfBirth, Gender, SectionID)
+VALUES
+    (1001, 'Jai', 'Kumar', '2005-02-10', 'Male', 101),
+    (1002, 'Kumar', 'San', '2004-09-25', 'Male', 102);
+
+INSERT INTO Marks (MarksID, StudentID, SectionID, Subject, MarksObtained)
+VALUES
+    (5001, 1001, 101, 'Math', 85),
+    (5002, 1002, 102, 'English', 78);
+
+INSERT INTO Attendance (AttendanceID, StudentID, SectionID, Date, Status)
+VALUES
+    (9001, 1001, 101, '2023-01-05', 'Present'),
+    (9002, 1002, 102, '2023-01-05', 'Absent');
+

@@ -1,0 +1,17 @@
+select 
+	e.exam_name,
+	s.first_name || ' ' || last_name as student_name,
+	ss.subject_name,
+	m.marks
+	
+from marks as m
+
+join students as s on m.student_id = s.student_id
+
+join subjects as ss on m.subject_id = ss.subject_id
+
+join exams as e on m.exam_id = e.exam_id
+
+where e.exam_id = 1;
+
+order by student_name;

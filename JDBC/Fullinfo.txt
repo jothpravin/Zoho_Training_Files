@@ -1,0 +1,21 @@
+SELECT
+  s.student_id,
+  s.first_name || ' ' || s.last_name AS student_name,
+  s.date_of_birth,
+  s.address,
+  s.gender,
+  c.class_name,
+  sec.section_name,
+  t.first_name || ' ' || t.last_name AS class_teacher_name
+FROM
+  students s
+JOIN
+  student_class_section_mapping scsm ON s.student_id = scsm.student_id
+JOIN
+  classes c ON scsm.class_id = c.class_id
+JOIN
+  sections sec ON scsm.section_id = sec.section_id
+JOIN
+  teacher_class_section_mapping tcsm ON scsm.class_id = tcsm.class_id AND scsm.section_id = tcsm.section_id
+JOIN
+  teachers t ON tcsm.teacher_id = t.teacher_id;

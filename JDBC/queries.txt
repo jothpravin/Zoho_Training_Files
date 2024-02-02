@@ -1,0 +1,48 @@
+CREATE TABLE Teacher (
+    TeacherID SERIAL PRIMARY KEY,
+    FirstName VARCHAR(255),
+    LastName VARCHAR(255),
+    DateOfBirth DATE,
+    Gender VARCHAR(10)
+);
+
+CREATE TABLE Section (
+    SectionID SERIAL PRIMARY KEY,
+    SectionName VARCHAR(255),
+    TeacherID INT,
+    FOREIGN KEY (TeacherID) REFERENCES Teacher(TeacherID)
+);
+
+CREATE TABLE Student (
+    StudentID SERIAL PRIMARY KEY,
+    FirstName VARCHAR(255),
+    LastName VARCHAR(255),
+    DateOfBirth DATE,
+    Gender VARCHAR(10),
+    SectionID INT,
+    FOREIGN KEY (SectionID) REFERENCES Section(SectionID)
+);
+
+CREATE TABLE Marks (
+    MarksID SERIAL PRIMARY KEY,
+    StudentID INT,
+    SectionID INT,
+    Tamil INT,
+    English INT,
+    Maths INT,
+    Science INT,
+    Social INT,
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+    FOREIGN KEY (SectionID) REFERENCES Section(SectionID)
+);
+
+CREATE TABLE Attendance (
+    AttendanceID SERIAL PRIMARY KEY,
+    StudentID INT,
+    SectionID INT,
+    Date DATE,
+    Status VARCHAR(10),
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+    FOREIGN KEY (SectionID) REFERENCES Section(SectionID)
+);
+

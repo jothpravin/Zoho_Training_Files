@@ -1,0 +1,23 @@
+{
+  "firstName": "Rachel",
+  "lastName": "Green",
+  "addressOfAuthor": {
+    "state": "Karnataka",
+    "road": "MG Road Cross cut Street",
+    "city": "Bangalore",
+    "pinCode": 560064
+  },
+  "phoneNos": [
+    {
+      "presentAt": "home",
+      "phoneNumber": "1234567890"
+    },
+    {
+      "type": "fax",
+      "number": "6366182095"
+    }
+  ],
+  "noOfPosts": 100,
+  "age": 30,
+  "status": "active"
+}

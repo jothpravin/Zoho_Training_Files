@@ -1,0 +1,2 @@
+update customer set place = 'srivi' where name = 'mojo';
+select * from customer;

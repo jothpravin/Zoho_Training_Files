@@ -1,0 +1,15 @@
+select 
+	s.first_name, 
+	s.last_name, 
+	c.class_name, 
+	sec.section_name 
+
+from students as s 
+
+join student_class_section_mapping as scs on s.student_id = scs.student_id
+
+join classes as c on scs.class_id = c.class_id
+
+join sections as sec on scs.section_id = sec.section_id;
+
+
