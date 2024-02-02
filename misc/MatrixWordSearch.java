@@ -87,10 +87,6 @@ public class MatrixWordSearch
 			if(check)
 				return true;
 		}
-		
-		
-			
-		
 	}
 	
 	public static void main(String []args)
