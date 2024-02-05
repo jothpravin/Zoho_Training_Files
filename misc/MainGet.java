@@ -1,65 +1,92 @@
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Scanner;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.TreeSet;
+import java.util.TreeMap;
 
-public class MainGET {
-
+public class MainGet {
     public static void main(String[] args) {
         try {
+            // URL for the API
+            String apiUrl = "https://restcountries.com/v3.1/all";
 
-            URL url = new URL("https://api.covid19api.com/summary");
+            // Create a URL object
+            URL url = new URL(apiUrl);
 
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.connect();
+            // Open a connection
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-            //Getting the response code
-            int responsecode = conn.getResponseCode();
+            // Set request method
+            connection.setRequestMethod("GET");
 
-            if (responsecode != 200) {
-                throw new RuntimeException("HttpResponseCode: " + responsecode);
+            // Get the response code
+            int responseCode = connection.getResponseCode();
+
+            // If the response code is 200 (OK), read the response
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // Create a BufferedReader to read the response
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+
+                // Read the response line by line and append it to the StringBuilder
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+
+                // Close the BufferedReader
+                in.close();
+                // Parse JSON response
+                JSONParser parser = new JSONParser();
+                JSONArray countriesArray = (JSONArray) parser.parse(response.toString());
+                TreeSet<Object> countriesName = new TreeSet<>();
+
+                // Iterate through the array and print the country names
+                for (Object obj : countriesArray) {
+                    JSONObject countryObj = (JSONObject) obj;
+                    JSONObject nameObj = (JSONObject) countryObj.get("name");
+                    System.out.println(nameObj.get("common"));
+                    countriesName.add(nameObj.get("common"));
+                }
+                System.out.println(countriesName);
+		    TreeMap<Long, String> populationCountries = new TreeMap<>();
+                for (Object obj : countriesArray) {
+		    JSONObject countryObj = (JSONObject) obj;
+		    JSONObject nameObj = (JSONObject) countryObj.get("name");
+
+		    // Check if the "population" field is present
+		    if (countryObj.containsKey("population")) {
+			  // Extract population as a Long
+			  Long population = (Long) countryObj.get("population");
+
+			  // Extract country name as a String
+			  String countryName = (String) nameObj.get("common");
+
+			  // Put data into the TreeMap
+			  populationCountries.put(population, countryName);
+		    } else {
+			  // Handle the case where "population" field is missing for a country
+			  System.out.println("Population data missing for a country: " + nameObj.get("common"));
+		    }
+		    }
+                System.out.println(populationCountries);
+                
             } else {
-
-                String inline = "";
-                Scanner scanner = new Scanner(url.openStream());
-
-                //Write all the JSON data into a string using a scanner
-                while (scanner.hasNext()) {
-                    inline += scanner.nextLine();
-                }
-
-                //Close the scanner
-                scanner.close();
-
-                //Using the JSON simple library parse the string into a json object
-                JSONParser parse = new JSONParser();
-                JSONObject data_obj = (JSONObject) parse.parse(inline);
-
-                //Get the required object from the above created object
-                JSONObject obj = (JSONObject) data_obj.get("Global");
-
-                //Get the required data using its key
-                System.out.println(obj.get("TotalRecovered"));
-
-                JSONArray arr = (JSONArray) data_obj.get("Countries");
-
-                for (int i = 0; i < arr.size(); i++) {
-
-                    JSONObject new_obj = (JSONObject) arr.get(i);
-
-                    if (new_obj.get("Slug").equals("albania")) {
-                        System.out.println("Total Recovered: " + new_obj.get("TotalRecovered"));
-                        break;
-                    }
-                }
+                // If the response code is not 200, print an error message
+                System.out.println("Error: HTTP response code - " + responseCode);
             }
+            // Disconnect the connection
+            connection.disconnect();
 
-        } catch (Exception e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
     }
-
 }
+
