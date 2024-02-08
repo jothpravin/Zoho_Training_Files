@@ -85,6 +85,34 @@ public class LinkedListImpl
    		head = prev;
 	}
 	
+	public void rotate(int k)
+	{
+		Node current = head;
+		int len = 0;
+		while(current != null)
+		{
+			len++;
+			current = current.next;
+		}
+		k =  k % len;
+		if(k == 0)
+		{
+			return;
+		}
+		int ind = 0;
+		Node temp = head;
+		while(ind < len - k - 1)
+		{
+			temp = temp.next;
+			ind++;
+		}
+		tail.next = head;
+		head = temp.next;
+		tail = temp;
+		tail.next = null; 
+		
+	}
+	
 	public static void main(String []args)
 	{
 		LinkedListImpl ll = new LinkedListImpl();
@@ -92,8 +120,12 @@ public class LinkedListImpl
 		ll.add(20); 
 		ll.add(30); 
 		ll.add(40);
+		ll.add(50);
 		ll.print(); 
-		ll.reverse();
+		//ll.reverse();
+		//ll.print();
+		ll.rotate(9);
+		System.out.println("Rotate");
 		ll.print();
 	}
 }
