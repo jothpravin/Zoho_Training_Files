@@ -82,7 +82,6 @@ public class LinkedListImpl
 		  prev = current;
 		  current = next;
    		}
-
    		head = prev;
 	}
 	
