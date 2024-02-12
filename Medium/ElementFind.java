@@ -22,7 +22,7 @@ public class ElementFind
 		Number = num.nextInt();
 		
 		int i=0;
-		while(array[i]<ArraySize)
+		while(i<ArraySize)
 		{
 			if(array[i]==Number)
 			{
