@@ -25,7 +25,7 @@ public class RhombusCharacter
 				}
 				else
 				{
-					c--;
+					c--;	
 				}
 			}
 			if(row<NumberOfRows)

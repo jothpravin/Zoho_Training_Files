@@ -16,6 +16,6 @@ public class WithoutScanner
 		catch(Exception e)
 		{
 			e.printStackTrace();
-		}	
+		}
 	}
 }
